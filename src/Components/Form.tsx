@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 
 interface FormInputs {
-    name: string;
+    phrase: string;
     owner: string;
     language: string;
 }
@@ -23,15 +23,15 @@ export const Form: React.FC<Props> = ({ onSubmit }) => {
         <div className='form-wrapper'>
             <form onSubmit={handleSubmit(onSubmit)} >
                 <label className='standard-label' htmlFor='name'>
-                    Project name:
+                    Searched phrase:
                 </label>
                 <input
                     defaultValue=''
-                    {...register('name', { required: true })}
+                    {...register('phrase', { required: true })}
                     className='standard-input'
                     type='text'
                 ></input>
-                {errors.name && <p className='error-message'>This field is required</p>}
+                {errors.phrase && <p className='error-message'>This field is required</p>}
                 <label className='standard-label' htmlFor='owner'>
                     Project owner:
                 </label>
@@ -48,8 +48,9 @@ export const Form: React.FC<Props> = ({ onSubmit }) => {
                 <select 
                 className='standard-input'
                 {...register('language')}>
+                    <option value='null'>Don't specify</option>
                     <option value='Java'>Java</option>
-                    <option value='JavaScript'>JavaScript</option>
+                    <option value='js'>JavaScript</option>
                     <option value='Go'>Go</option>
                 </select>
                 <button className='standard-button' type='submit' >Sumbit</button>
