@@ -1,26 +1,30 @@
 import { Octokit } from "octokit";
+import { Endpoints } from "@octokit/types";
+
 
 const octokit = new Octokit({ 
     auth: process.env.TOKEN
   });
 
-function queryStringCreator(phrase: string, owner: string, language: string)
+export type dataParameters = Endpoints["GET /search/code"]["parameters"];
+export type dataResponse = Endpoints["GET /search/code"]["response"];
+
+export const parametersCreator = (phrase: string, owner: string, language: string, currentPage: number, itemsPerPage: number) : dataParameters =>
 {
     let queryString = `q=${phrase}+user:${owner}`;
     if (language !== 'null')
     {
       queryString += `+language:${language}`;
     }
-    return queryString;
+    return {q: queryString, per_page: itemsPerPage, page: currentPage};
 }
 
-export async function searchInApi(phrase: string, owner: string, language: string, currentPage: number, itemsPerPage: number) {
-    const queryString = queryStringCreator(phrase, owner, language);
+export const searchInApi = (params: dataParameters) : Promise<dataResponse> | undefined => {
     try{
-      const result = await octokit.request('GET /search/code', {
-        q: queryString,
-        page: currentPage,
-        per_page: itemsPerPage
+      const result = octokit.request('GET /search/code', {
+        q: params.q,
+        page: params.page,
+        per_page: params.per_page
       })
       return result;
     }

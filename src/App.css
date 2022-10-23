@@ -31,7 +31,7 @@ standard-button:hover {
   margin: auto;
 }
 
-h1 {
+h1, h2{
   text-align: center;
 }
 
@@ -39,3 +39,24 @@ h1 {
   color: red;
 }
 
+table {
+  width: 90%;
+  margin: auto;
+}
+
+.td-owner{
+  width: 20%
+}
+
+.td-file {
+  width: 20%;
+}
+
+
+.td-description {
+  width: 60%;
+}
+
+table, tr, td {
+  border: solid 1px #4CAF50;
+}
