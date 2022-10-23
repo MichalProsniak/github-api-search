@@ -10,7 +10,7 @@ export const FileNameInTable: React.FC<FileNameInTableProps> = ({name, fileHtml}
             <div>
                 <p><b>{name}</b></p>
                 <form action={fileHtml}>
-                    <input type="submit" value="Check in GitHub" />
+                    <input className='table-button' type="submit" value="Check in GitHub" />
                 </form>
             </div>
         );

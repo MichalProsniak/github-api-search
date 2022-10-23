@@ -57,6 +57,54 @@ table {
   width: 60%;
 }
 
+td {
+  text-align: center; 
+  vertical-align: middle;
+}
+
 table, tr, td {
   border: solid 1px #4CAF50;
+  border-radius: 5px;
+}
+
+table {
+  margin-bottom: 10px;
+}
+
+.modal-container {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 0 32px rgba(0,0,0,0.5);
+  padding: 40px;
+  width: 450px;
+}
+
+.overlay {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table-button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.table-button:hover {
+  background-color: darkgreen;
+  cursor: pointer;
 }
