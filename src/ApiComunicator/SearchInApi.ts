@@ -19,14 +19,17 @@ export const parametersCreator = (phrase: string, owner: string, language: strin
     return {q: queryString, per_page: itemsPerPage, page: currentPage};
 }
 
-export const searchInApi = (params: dataParameters) : Promise<dataResponse> | undefined => {
+export const searchInApi = async (params: dataParameters) => {
     try{
-      const result = octokit.request('GET /search/code', {
+      const result = await octokit.request('GET /search/code', {
         q: params.q,
         page: params.page,
         per_page: params.per_page
       })
-      return result;
+      if (result.status === 200)
+      {
+        return result;
+      }
     }
     catch (error) {
       console.log(error)
