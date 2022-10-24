@@ -9,7 +9,7 @@ export const FileNameInTable: React.FC<FileNameInTableProps> = ({name, fileHtml}
         return (
             <div>
                 <p><b>{name}</b></p>
-                <a className='table-button' href={fileHtml}>Check in GitHub</a>
+                <button className='table-button' onClick={() => {window.open(fileHtml,'_blank')}}>Check in GitHub</button>
             </div>
         );
 }
