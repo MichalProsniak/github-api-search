@@ -3,7 +3,8 @@ import './App.css';
 import { Form } from './Components/Form';
 import { searchInApi, parametersCreator, dataParameters, dataResponse } from './ApiComunicator/SearchInApi';
 import { ResultsTable } from './Components/ResultsTable';
-
+import {PaginationBar} from './Components/PaginationBar'
+import {ItemsNumberChanger} from './Components/ItemsNumberChanger'
 
 function App() {
 
@@ -14,11 +15,9 @@ function App() {
   const [searchedPhrase, setSearchedPhrase] = useState<string>('');
   const [searchedUser, setSearchedUser] = useState<string>('');
   const [searchedLanguage, setSearchedLanguage] = useState<string>('');
-  const [maxPage, setMaxPage] = useState<number | undefined>(0);
-  // let searchParams : dataParameters;
+  const [maxPage, setMaxPage] = useState<number>(0);
   const searchParams = useRef<dataParameters>({q: ''});
   
-
   useEffect( () => {
     const getData = async () => {
       searchParams.current = parametersCreator(searchedPhrase, searchedUser, searchedLanguage, currentPage, itemsPerPage);
@@ -28,10 +27,16 @@ function App() {
         if(res?.status === 200)
         {
           setSearchResult(res);
-          setMaxPage(Math.ceil(res.data.total_count / itemsPerPage))
+          const maxPageValue = Math.ceil(res.data.total_count / itemsPerPage)
+          if (currentPage > maxPageValue)
+          {
+            setCurrentPage(maxPageValue)
+          }
+          setMaxPage(maxPageValue)
           setIsError(false);
         }
         else{
+          console.log(searchResult)
           setSearchResult(undefined)
           console.log('error')
           setIsError(true);
@@ -41,12 +46,10 @@ function App() {
     getData();
   }, [currentPage, searchedPhrase, searchedUser, searchedLanguage, itemsPerPage])
 
-
   return (
     <div className="App">
       <h1>Search for project</h1>
-      {maxPage && <h1>{maxPage}</h1>}
-      <Form onSubmit={async ({phrase, owner, language}) => {
+      <Form onSubmit={({phrase, owner, language}) => {
         setSearchedLanguage(language);
         setSearchedUser(owner);
         setSearchedPhrase(phrase);
@@ -54,9 +57,15 @@ function App() {
       }}/>
       {isError && <h1 className='error-message'>Something went wrong, please try again later!</h1>}
       {!isError && searchResult && <ResultsTable searchResult={searchResult} />}
-      <button onClick={() => setCurrentPage((prevState) => prevState + 1)}>xxx</button>
-      <button onClick={() => setItemsPerPage((prevState) => prevState - 1)}>yyy</button>
-
+      {!isError && <ItemsNumberChanger 
+        itemsPerPage={itemsPerPage} 
+        changeNumberOfItems={({ itemsPerPage }) => {
+          setItemsPerPage(itemsPerPage);
+        }} />}
+      {!isError && searchResult &&<PaginationBar 
+        maxPage={maxPage} 
+        changeCurrentPage={(selectedItem: { selected: number; }) => setCurrentPage(selectedItem.selected + 1)} />}
+        
     </div>
   );
 }

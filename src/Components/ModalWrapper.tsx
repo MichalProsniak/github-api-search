@@ -12,7 +12,7 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({onBackdropClick, avat
         return null;
     return (<Modal onBackdropClick={onBackdropClick} avatar={avatar}>
         <div onClick={e => e.stopPropagation()} className='modal-container'>
-            <img src={avatar}alt='Avatar'/>
+            <img className='modal-image' src={avatar}alt='Avatar'/>
         </div>
     </Modal>);
 }

@@ -8,9 +8,21 @@
   box-sizing: border-box;
 }
 
+.input-number-changer {
+  width: 10%;
+  padding: 12px 20px;
+  margin-left: 45%;
+  margin-bottom: 15px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-right: 10px;
+}
+
 .standard-button {
   width: 100%;
-  background-color: #4CAF50;
+  background-color: #00BFFF;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -19,8 +31,8 @@
   cursor: pointer;
 }
 
-standard-button:hover {
-  background-color: #45a049;
+.standard-button:hover {
+  background-color: #1E90FF;
 }
 
 .form-wrapper {
@@ -32,6 +44,10 @@ standard-button:hover {
 }
 
 h1, h2{
+  text-align: center;
+}
+
+.message {
   text-align: center;
 }
 
@@ -63,7 +79,7 @@ td {
 }
 
 table, tr, td {
-  border: solid 1px #4CAF50;
+  border: solid 1px #00BFFF;
   border-radius: 5px;
 }
 
@@ -82,6 +98,10 @@ table {
   width: 450px;
 }
 
+.modal-image {
+  max-width: 420px;
+}
+
 .overlay {
   position: fixed;
   height: 100%;
@@ -94,7 +114,7 @@ table {
 }
 
 .table-button {
-  background-color: #4CAF50; /* Green */
+  background-color: #00BFFF;
   border: none;
   border-radius: 5px;
   color: white;
@@ -106,6 +126,6 @@ table {
 }
 
 .table-button:hover {
-  background-color: darkgreen;
+  background-color: #1E90FF;
   cursor: pointer;
 }
