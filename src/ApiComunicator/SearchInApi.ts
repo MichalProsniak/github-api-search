@@ -33,5 +33,6 @@ export const searchInApi = async (params: dataParameters) => {
     }
     catch (error) {
       console.log(error)
+      
     }
   }

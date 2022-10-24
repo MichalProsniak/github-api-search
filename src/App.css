@@ -43,11 +43,7 @@
   margin: auto;
 }
 
-h1, h2{
-  text-align: center;
-}
-
-.message {
+h1, h2, h3, .message{
   text-align: center;
 }
 
@@ -60,14 +56,9 @@ table {
   margin: auto;
 }
 
-.td-owner{
+.td-owner, .td-file{
   width: 20%
 }
-
-.td-file {
-  width: 20%;
-}
-
 
 .td-description {
   width: 60%;

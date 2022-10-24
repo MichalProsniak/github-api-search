@@ -10,6 +10,8 @@ function App() {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isError, setIsError] = useState<boolean>(false);
+  const [isData, setIsData] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
   const [searchResult, setSearchResult] = useState<dataResponse | undefined>(undefined);
   const [searchedPhrase, setSearchedPhrase] = useState<string>('');
@@ -20,12 +22,14 @@ function App() {
   
   useEffect( () => {
     const getData = async () => {
+      setIsLoading(true);
       searchParams.current = parametersCreator(searchedPhrase, searchedUser, searchedLanguage, currentPage, itemsPerPage);
       if (searchedPhrase !=='' && searchedUser !== '')
       {
         const res = await searchInApi(searchParams.current)
-        if(res?.status === 200)
+        if(res?.status === 200 && res.data.total_count > 0)
         {
+          setIsData(true)
           setSearchResult(res);
           const maxPageValue = Math.ceil(res.data.total_count / itemsPerPage)
           if (currentPage > maxPageValue)
@@ -35,13 +39,15 @@ function App() {
           setMaxPage(maxPageValue)
           setIsError(false);
         }
+        else if (res?.status === 200)
+        {
+          setIsData(false);
+        }
         else{
-          console.log(searchResult)
-          setSearchResult(undefined)
-          console.log('error')
           setIsError(true);
         }
       }
+      setIsLoading(false);
     }
     getData();
   }, [currentPage, searchedPhrase, searchedUser, searchedLanguage, itemsPerPage])
@@ -56,13 +62,16 @@ function App() {
         setCurrentPage(1);
       }}/>
       {isError && <h1 className='error-message'>Something went wrong, please try again later!</h1>}
-      {!isError && searchResult && <ResultsTable searchResult={searchResult} />}
-      {!isError && <ItemsNumberChanger 
+      {isError && <h3 className='error-message'>(Check console for specific info)</h3>}
+      {!isError && !isData && <h1 className='error-message'>There are no results for those parameters!</h1>}
+      {!isError && isData && searchResult && !isLoading &&<ResultsTable searchResult={searchResult} />}
+      {!isError && isLoading &&<h1>Loading....</h1>}
+      {!isError && !isLoading && <ItemsNumberChanger 
         itemsPerPage={itemsPerPage} 
         changeNumberOfItems={({ itemsPerPage }) => {
           setItemsPerPage(itemsPerPage);
         }} />}
-      {!isError && searchResult &&<PaginationBar 
+      {!isError && searchResult && <PaginationBar 
         maxPage={maxPage} 
         changeCurrentPage={(selectedItem: { selected: number; }) => setCurrentPage(selectedItem.selected + 1)} />}
         
