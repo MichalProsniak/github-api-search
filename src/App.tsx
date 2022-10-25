@@ -31,6 +31,10 @@ function App() {
         {
           setIsData(true)
           setSearchResult(res);
+          if (res.data.total_count > 1000)
+          {
+            res.data.total_count = 1000
+          }
           const maxPageValue = Math.ceil(res.data.total_count / itemsPerPage)
           if (currentPage > maxPageValue)
           {
@@ -52,6 +56,24 @@ function App() {
     getData();
   }, [currentPage, searchedPhrase, searchedUser, searchedLanguage, itemsPerPage])
 
+  
+  useEffect(() => {
+    const filtersData = window.localStorage.getItem('filters');
+    if (filtersData)
+    {
+      const filtersValues = JSON.parse(filtersData);
+      setSearchedPhrase(filtersValues.searchedPhrase)
+      setSearchedUser(filtersValues.searchedUser)
+      setSearchedLanguage(filtersValues.searchedLanguage)
+      setItemsPerPage(filtersValues.itemsPerPage)
+    }
+  }, [])
+
+  useEffect(() => {
+    const valuesToSave = {searchedPhrase, searchedUser, searchedLanguage, itemsPerPage};
+    window.localStorage.setItem('filters', JSON.stringify(valuesToSave));
+  }, [searchedPhrase, searchedUser, searchedLanguage, itemsPerPage])
+
   return (
     <div className="App">
       <h1>Search for project</h1>
@@ -60,7 +82,10 @@ function App() {
         setSearchedUser(owner);
         setSearchedPhrase(phrase);
         setCurrentPage(1);
-      }}/>
+      }}
+      phrase={searchedPhrase}
+      owner={searchedUser}
+      language={searchedLanguage}/>
       {isError && <h1 className='error-message'>Something went wrong, please try again later!</h1>}
       {isError && <h3 className='error-message'>(Check console for specific info)</h3>}
       {!isError && !isData && <h1 className='error-message'>There are no results for those parameters!</h1>}

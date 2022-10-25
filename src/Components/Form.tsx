@@ -9,9 +9,12 @@ interface FormInputs {
 
 interface Props {
     onSubmit: (values: FormInputs) => void;
+    phrase: string;
+    owner: string;
+    language: string;
 }
 
-export const Form: React.FC<Props> = ({ onSubmit }) => {
+export const Form: React.FC<Props> = ({ onSubmit, phrase, owner, language }) => {
 
     const {
         register,
@@ -26,7 +29,7 @@ export const Form: React.FC<Props> = ({ onSubmit }) => {
                     Searched phrase:
                 </label>
                 <input
-                    defaultValue=''
+                    defaultValue={phrase}
                     {...register('phrase', { required: true })}
                     className='standard-input'
                     type='text'
@@ -36,7 +39,7 @@ export const Form: React.FC<Props> = ({ onSubmit }) => {
                     Project owner:
                 </label>
                 <input
-                    defaultValue=''
+                    defaultValue={owner}
                     {...register('owner', { required: true })}
                     className='standard-input'
                     type='text'
@@ -47,6 +50,7 @@ export const Form: React.FC<Props> = ({ onSubmit }) => {
                 </label>
                 <select 
                 className='standard-input'
+                defaultValue={language}
                 {...register('language')}>
                     <option value='null'>Don't specify</option>
                     <option value='Java'>Java</option>
