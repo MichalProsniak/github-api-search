@@ -22,6 +22,16 @@ export const Form: React.FC<Props> = ({ onSubmit, phrase, owner, language }) => 
         formState: { errors }
     } = useForm<FormInputs>();
 
+    if (errors.phrase?.ref?.value)
+    {
+        delete errors.phrase
+    }
+
+    if (errors.owner?.ref?.value)
+    {
+        delete errors.owner
+    }
+
     return (
         <div className='form-wrapper'>
             <form onSubmit={handleSubmit(onSubmit)} >
@@ -35,6 +45,8 @@ export const Form: React.FC<Props> = ({ onSubmit, phrase, owner, language }) => 
                     type='text'
                 ></input>
                 {errors.phrase && <p className='error-message'>This field is required</p>}
+                
+
                 <label className='standard-label' htmlFor='owner'>
                     Project owner:
                 </label>
