@@ -32,6 +32,9 @@ export const Form: React.FC<Props> = ({ onSubmit, phrase, owner, language }) => 
         delete errors.owner
     }
 
+
+    
+
     return (
         <div className='form-wrapper'>
             <form onSubmit={handleSubmit(onSubmit)} >
