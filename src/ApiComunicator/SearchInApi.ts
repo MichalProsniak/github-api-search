@@ -3,7 +3,6 @@ import { Endpoints } from "@octokit/types";
 
 
 const octokit = new Octokit({ 
-    auth: process.env.TOKEN
   });
 
 export type dataParameters = Endpoints["GET /search/code"]["parameters"];
@@ -33,6 +32,5 @@ export const searchInApi = async (params: dataParameters) => {
     }
     catch (error) {
       console.log(error)
-      
     }
   }
