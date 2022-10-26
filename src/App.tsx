@@ -8,7 +8,7 @@ import {ItemsNumberChanger} from './Components/ItemsNumberChanger'
 
 function App() {
 
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(0);
   const [isError, setIsError] = useState<boolean>(false);
   const [isData, setIsData] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -19,6 +19,7 @@ function App() {
   const [searchedLanguage, setSearchedLanguage] = useState<string>('');
   const [maxPage, setMaxPage] = useState<number>(0);
   const searchParams = useRef<dataParameters>({q: ''});
+  const maxNumberOfData = 1000;
   
   useEffect( () => {
     const getData = async () => {
@@ -31,14 +32,14 @@ function App() {
         {
           setIsData(true)
           setSearchResult(res);
-          if (res.data.total_count > 1000)
+          if (res.data.total_count > maxNumberOfData)
           {
-            res.data.total_count = 1000
+            res.data.total_count = maxNumberOfData
           }
           const maxPageValue = Math.ceil(res.data.total_count / itemsPerPage)
           if (currentPage > maxPageValue)
           {
-            setCurrentPage(maxPageValue)
+            setCurrentPage(maxPageValue - 1)
           }
           setMaxPage(maxPageValue)
           setIsError(false);
@@ -78,10 +79,10 @@ function App() {
     <div className="App">
       <h1>Search for project</h1>
       <Form onSubmit={({phrase, owner, language}) => {
+        setCurrentPage(0);
         setSearchedLanguage(language);
         setSearchedUser(owner);
         setSearchedPhrase(phrase);
-        setCurrentPage(1);
       }}
       phrase={searchedPhrase}
       owner={searchedUser}
@@ -98,7 +99,8 @@ function App() {
         }} />}
       {!isError && searchResult && <PaginationBar 
         maxPage={maxPage} 
-        changeCurrentPage={(selectedItem: { selected: number; }) => setCurrentPage(selectedItem.selected + 1)} />}
+        changeCurrentPage={(selectedItem: { selected: number; }) => setCurrentPage(selectedItem.selected)}
+        currentPage={currentPage} />}
         
     </div>
   );

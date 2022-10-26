@@ -1,5 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 interface FormInputs {
     phrase: string;
@@ -14,23 +16,27 @@ interface Props {
     language: string;
 }
 
+const schema = yup.object().shape({
+    phrase: yup.string().required(),
+    owner: yup.string().required(),
+});
+
 export const Form: React.FC<Props> = ({ onSubmit, phrase, owner, language }) => {
 
     const {
         register,
         handleSubmit,
-        formState: { errors }
-    } = useForm<FormInputs>();
+        formState: { errors },
+        setValue,
+    } = useForm<FormInputs>({
+        resolver: yupResolver(schema),
+    });
 
-    if (errors.phrase?.ref?.value)
+    if (!language)
     {
-        delete errors.phrase
+        language = 'null'
     }
-
-    if (errors.owner?.ref?.value)
-    {
-        delete errors.owner
-    }
+    setValue('language', language)
 
     return (
         <div className='form-wrapper'>
@@ -40,11 +46,11 @@ export const Form: React.FC<Props> = ({ onSubmit, phrase, owner, language }) => 
                 </label>
                 <input
                     defaultValue={phrase}
-                    {...register('phrase', { required: true })}
+                    {...register('phrase')}
                     className='standard-input'
                     type='text'
                 ></input>
-                {errors.phrase && <p className='error-message'>This field is required</p>}
+                {errors.phrase && <p className='error-message'>{errors.phrase.message}</p>}
                 
 
                 <label className='standard-label' htmlFor='owner'>
@@ -52,21 +58,20 @@ export const Form: React.FC<Props> = ({ onSubmit, phrase, owner, language }) => 
                 </label>
                 <input
                     defaultValue={owner}
-                    {...register('owner', { required: true })}
+                    {...register('owner')}
                     className='standard-input'
                     type='text'
                 ></input>
-                {errors.owner && <p className='error-message'>This field is required</p>}
+                {errors.owner && <p className='error-message'>{errors.owner.message}</p>}
                 <label className='standard-label' htmlFor='language'>
                     Language:
                 </label>
                 <select 
                 className='standard-input'
-                defaultValue={language}
                 {...register('language')}>
                     <option value='null'>Don't specify</option>
                     <option value='Java'>Java</option>
-                    <option value='js'>JavaScript</option>
+                    <option value='JavaScript'>JavaScript</option>
                     <option value='Go'>Go</option>
                 </select>
                 <button className='standard-button' type='submit' >Sumbit</button>

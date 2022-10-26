@@ -2,14 +2,14 @@ import React from 'react'
 import ReactPaginate from "react-paginate";
 
 interface PaginationBarProps {
-    maxPage: number,
-    changeCurrentPage: (selectedItem: { selected: number; }) => void,
-    
+    maxPage: number;
+    changeCurrentPage: (selectedItem: { selected: number; }) => void;
+    currentPage: number
 }
 
-export const PaginationBar: React.FC<PaginationBarProps> = ({maxPage, changeCurrentPage}) => {
+export const PaginationBar: React.FC<PaginationBarProps> = ({maxPage, changeCurrentPage, currentPage}) => {
         return (
-                <ReactPaginate
+            <ReactPaginate
                 previousLabel={"<<"}
                 nextLabel={">>"}
                 breakLabel={"..."}
@@ -27,6 +27,8 @@ export const PaginationBar: React.FC<PaginationBarProps> = ({maxPage, changeCurr
                 breakClassName={"page-item"}
                 breakLinkClassName={"page-link"}
                 activeClassName={"active"}
-            />
+                forcePage = {currentPage}
+
+                />
         );
 }
