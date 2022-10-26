@@ -1,6 +1,6 @@
 import React from 'react'
-import {FileNameInTable} from './FileNameInTable'
-import {OwnerInTable} from './OwnerInTable'
+import { FileNameInTable } from './FileNameInTable'
+import { OwnerInTable } from './OwnerInTable'
 
 interface TableRowProps {
     name: string,

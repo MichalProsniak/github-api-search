@@ -3,8 +3,8 @@ import './App.css';
 import { Form } from './Components/Form';
 import { searchInApi, parametersCreator, dataParameters, dataResponse } from './ApiComunicator/SearchInApi';
 import { ResultsTable } from './Components/ResultsTable';
-import {PaginationBar} from './Components/PaginationBar'
-import {ItemsNumberChanger} from './Components/ItemsNumberChanger'
+import { PaginationBar } from './Components/PaginationBar'
+import { ItemsNumberChanger } from './Components/ItemsNumberChanger'
 
 function App() {
 

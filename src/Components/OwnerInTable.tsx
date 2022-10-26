@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ModalWrapper } from './ModalWrapper'
 
-
 interface OwnerInTableProps {
     ownerName: string,
     avatar: string
