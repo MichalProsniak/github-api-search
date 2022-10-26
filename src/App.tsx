@@ -97,7 +97,7 @@ function App() {
         changeNumberOfItems={({ itemsPerPage }) => {
           setItemsPerPage(itemsPerPage);
         }} />}
-      {!isError && searchResult && <PaginationBar 
+      {!isError && searchResult && isData && <PaginationBar 
         maxPage={maxPage} 
         changeCurrentPage={(selectedItem: { selected: number; }) => setCurrentPage(selectedItem.selected)}
         currentPage={currentPage} />}
